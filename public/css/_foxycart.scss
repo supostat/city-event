@@ -1,0 +1,63 @@
+/*** Styles specific to FoxyCart ***/
+
+//Hidden FC fields, let's not show them
+div#fc_required_hidden_fields {
+  display: none;
+}
+
+//////Remove ugly padding
+//password
+@media #{$medium-up} {
+  .field {
+    .columns:first-child {
+      padding-left: 0;
+    }
+
+    .columns:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+//Select, postal code
+@media #{$small-only} {
+  .field > div > div.columns{
+    padding: 0;
+  }
+}
+
+//CC expiration
+@media #{$small-only} {
+  li {
+      div.columns:first-child {
+        padding-left: 0;
+      }
+
+      div.columns:last-child {
+        padding-right: 0;
+    }
+  }
+}
+
+.fc_error {
+  background-color: #ff7777;
+  color: white;
+}
+
+//Dropdown buttons
+button.fc_foxycomplete_combobox {
+  float: left !important;
+}
+
+//TODO: Add styling here as needed
+.fc_account_message {
+
+}
+
+#fc_cart_head_item {
+  width: 125px;
+}
+
+#fc_cart_head_price {
+  width: 125px;
+}

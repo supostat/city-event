@@ -1,0 +1,18 @@
+<header class="center_stage">
+  <h1>Event Registration</h1>
+
+  <p>
+    <% if current_user.nil? %>
+        Sign in
+    <% else %>
+        Welcome,<%= "#{current_user.first} #{current_user.last}" %>
+    <% end %>
+  </p>
+
+  <div class="context_bar"></div>
+</header>
+<% if !params[:notice].blank? %>
+    <div class="prettyprint">
+      <%= params[:notice] %>
+    </div>
+<% end %>

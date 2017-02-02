@@ -1,0 +1,9 @@
+<h4 class="rule">
+  <%= a.addon.title %>
+</h4>
+<ul>
+<li class="grid-6-12">
+  <%= addon_form.input :addon_value,as: :radio_buttons, collection: a.addon.choices.map{|a| [a.title,a.id, {"data-title" => a.title},{"data-price" => a.price} ]}, include_blank: false, input_html: { class: 'price-option', :"data-type" => "addon_#{a.addon.id}",:"control-type" => "radio",:"data-value" => "1" }, label: false %>
+ </li>
+<li class="grid-6-12">&nbsp;</li>
+</ul>

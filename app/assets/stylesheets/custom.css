@@ -1,0 +1,205 @@
+.event_addons_registration_type {
+    display: flex;
+}
+
+.text_normal {
+    width: 250px !important;
+}
+
+.ctrl_date {
+
+    width: 90px !important;
+}
+
+.ctrl_time {
+
+    width: 50px !important;
+}
+
+.time_ctrl {
+
+    width: 60px;
+}
+
+.prettyprint {
+    padding: 2px;
+    border: 1px solid #888;
+
+    font-size: 12px;
+    padding: 10px !important;
+    word-wrap: break-word;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#33D48230', endColorstr='#33D48230');";
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#33D48230', endColorstr='#33D48230');
+    background-color: transparent;
+    background-color: rgba(212,130,48,0.2);
+    zoom: 1;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    line-height: 1.5;
+    border: 1px solid #d48230 !important;
+    color: #444;
+    margin-bottom: 30px;
+
+}
+
+.ui-datepicker-next, .ui-datepicker-prev {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url("") ;
+    cursor: pointer
+}
+
+#summary-main {
+
+    position: fixed;
+    top: 12%;
+    left: 62%;  /* Put the left edge on the horizontal center */
+
+
+}
+
+#totalCartAmountHolder {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.input_wrapper {
+
+
+    margin-bottom: 5px;
+}
+
+.title_wrapper {
+    padding: 5px;
+}
+
+.clear {
+    clear: both;
+}
+.relative {
+    position: relative;
+}
+
+
+.auto_complete {
+    background: #fff;
+    z-index: 1000;
+    top: 29px !important;
+    left: 5px !important;
+    width: auto;
+}
+
+.auto_complete ul {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none
+}
+
+.auto_complete ul li.in_auto_complete {
+    margin-bottom: 0 !important
+}
+
+.auto_complete ul li {
+    margin: 0 0 0 0;
+    padding: 3px;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+    width: 90%;
+}
+
+.auto_complete ul li.selected {
+    background-color: #eee;
+    background-image: url(/images/feed_item_gradient.png?7a49aaa);
+    background-position: top right;
+    background-repeat: repeat-y;
+    width: 90%;
+}
+
+.auto_complete ul li img {
+    height: 31px;
+    width: 31px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 1px;
+    margin-right: 3px
+}
+
+.auto_complete ul strong.highlight {
+    color: #444;
+    margin: 0;
+    padding: 0
+}
+
+.auto_complete#full_names__auto_complete ul li {
+    position: relative;
+    top: 0px;
+    height: 25px;
+    padding-left: 40px;
+    padding-top: 13px
+}
+
+.auto_complete#full_names__auto_complete ul li img.in_auto_complete {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    color: #ccc;
+    font-size: 7px;
+}
+
+.auto_complete#full_names__auto_complete ul li.inline_message {
+    display: inline;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    text-align: right;
+    color: #bf311a;
+    border: none;
+    background: none;
+    font-size: 9px;
+    padding: 0;
+    margin: 0
+}
+
+.checkbox {
+    width: 35px;
+    height: 35px;
+    background-size: cover;
+    display: inline-block;
+}
+
+.checkbox .overlay {
+    background: rgba(119, 119, 119, 0.5);
+    display: block;
+    height: 100%;
+}
+
+.checkbox-person h4 {
+    vertical-align: middle;
+    display: inline-flex;
+
+}
+
+input[type=checkbox].person {
+    display: none;
+}
+
+input[type=checkbox].person:checked + span {
+    background: rgba(119, 119, 119, 0);
+}
+.hidden {
+    display: none; }
+
+#verify_result{
+    color: #a92b17;
+}
+
+.end_summary_lists ul {
+    margin-left: 35px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,22 @@
+  <ul class="fields" style="margin-top:0px !important;" >
+    <li class="grid-4-12" >
+      <%= f.input :title %>
+    </li>
+
+    <li class="grid-2-12 price">
+      <%= f.input :price, :input_html => {:onkeypress => "return isNumberKey(event)",:value=>'0.00',:class => "decimal2"} %>
+    </li>
+
+    <li class="grid-2-12" style = "display:none;">
+      <%= f.input :range_from, :input_html => { :class => "range_from", :onblur => "validateRange(this);", :onkeypress => "return isNumberKey(event)"} %>
+    </li>
+
+    <li class="grid-2-12" style = "display:none;">
+      <%= f.input :range_to, :input_html => { :class => "range_to",:onblur => "validateRange(this);",:onkeypress => "return isNumberKey(event)" } %>
+    </li>
+    <li class="grid-2-12" style="padding: 5px;">
+      <label form="first_name">&nbsp;</label>
+      <%= link_to_remove_fields "Remove", f %>
+      <%= image_tag('arrow-cursor-drag.png',size: "16x16",class: "choiceHandle") %>
+    </li>
+  </ul>

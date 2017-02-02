@@ -1,0 +1,10 @@
+<div class="grid_8 footer">
+    <% if current_city_user.nil? %>
+        Sign in
+    <% else %>
+        <% if current_city_user.staff? %>
+            <%= link_to 'Events Home',upcoming_path,:class => 'btn .btn_go' %>
+            <%= link_to 'Events Admin',admin_path,:class => 'btn .btn_go' %>
+        <% end %>
+    <% end %>
+</div>

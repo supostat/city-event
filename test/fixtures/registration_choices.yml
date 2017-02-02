@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registration_id: 
+  addon_id: 1
+  choice_id: 1
+  choice_price: 1.5
+  choice_value: 1
+
+two:
+  registration_id: 
+  addon_id: 1
+  choice_id: 1
+  choice_price: 1.5
+  choice_value: 1

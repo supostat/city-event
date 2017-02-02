@@ -1,0 +1,13 @@
+<div class="grid_8 footer">
+  <% if current_city_user.nil? %>
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          Not a member? <a href="https://2rc.onthecity.org/kiosk/">Sign up here.</a>
+        </div>
+      </div>
+  <% else %>
+      <% if current_city_user.staff? %>
+          <%= link_to 'Events Admin',admin_path,:class => 'btn .btn_go' %>
+      <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,57 @@
+/*
+Syntax error: File to import not found or unreadable: foundation/functions.
+              Load path: A:/Git/the-city-event-registration/public/css/foundation/foundation
+        on line 58 of _settings.scss
+
+53: 
+54: // This is the default html and body font-size for the base rem value.
+55: // $rem-base: 16px;
+56: 
+57: // Allows the use of rem-calc() or lower-bound() in your settings
+58: @import "foundation/functions";
+59: 
+60: // The default font-size is set to 100% of the browser style sheet (usually 16px)
+61: // for compatibility with browser-based text zoom or user-set defaults.
+62: 
+63: // Since the typical default browser font-size is 16px, that makes the calculation for grid size.
+
+Backtrace:
+_settings.scss:58
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/import_node.rb:67:in `rescue in import'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/import_node.rb:45:in `import'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/import_node.rb:28:in `imported_file'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/import_node.rb:37:in `css_import?'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:217:in `visit_import'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:37:in `visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:100:in `visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:53:in `map'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:37:in `visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:100:in `visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:7:in `visit'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/tree/root_node.rb:20:in `render'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/engine.rb:315:in `_render'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/engine.rb:262:in `render'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/plugin/compiler.rb:362:in `update_stylesheet'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/plugin/compiler.rb:201:in `each'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/plugin.rb:81:in `update_stylesheets'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/exec.rb:443:in `watch_or_update'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/exec.rb:326:in `process_result'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/exec.rb:41:in `parse'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/lib/sass/exec.rb:21:in `parse!'
+C:/Program Files (x86)/ruby-1.9.2/lib/ruby/gems/1.9.1/gems/sass-3.2.13/bin/scss:13:in `<top (required)>'
+C:/Program Files (x86)/ruby-1.9.2/bin/scss:23:in `load'
+C:/Program Files (x86)/ruby-1.9.2/bin/scss:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: foundation/functions.\A               Load path: A:/Git/the-city-event-registration/public/css/foundation/foundation\A         on line 58 of _settings.scss\A \A 53: \A 54: // This is the default html and body font-size for the base rem value.\A 55: // $rem-base: 16px;\A 56: \A 57: // Allows the use of rem-calc() or lower-bound() in your settings\A 58: @import \"foundation/functions\";\A 59: \A 60: // The default font-size is set to 100% of the browser style sheet (usually 16px)\A 61: // for compatibility with browser-based text zoom or user-set defaults.\A 62: \A 63: // Since the typical default browser font-size is 16px, that makes the calculation for grid size."; }

@@ -1,0 +1,13 @@
+<section id="breadcrumb">
+  <div class="steps">
+    <% route = request.env['PATH_INFO'] %>
+
+    <a <%= route =='root' ? 'class=selected': ''  %> href="javascript:void(0);"></a>
+    <a <%= route =='upcoming' ? 'class=selected' : ''  %> href="javascript:void(0);"></a>
+    <a <%= route =='event_registration' ? 'class=selected' : ''  %> href="javascript:void(0);"></a>
+    <a <%= route =='event_registration_summary' ? 'class=selected' : ''  %> href="javascript:void(0);"></a>
+  </div>
+  <div class="clr"></div>
+  <%= current_tab_name.html_safe %>
+</section>
+

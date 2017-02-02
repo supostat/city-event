@@ -1,0 +1,17 @@
+development:
+  THE_CITY_APP_ID:  '8b2aa8d0ee6fe03bf64af5b05c6eec87de99a569136390126df3ba393a2dfc0e'
+  THE_CITY_SECRET: 'e9ad1af54c4ce0990bcbd418c4289cf042406452202bf9dcbbc171c808d1ec60'
+  AdminApi_THECITY_KEY: 'eb045bd903608a165e0c524e8bdda2f221a5c42e'
+  AdminApi_THECITY_TOKEN: '27a6d8d4d0643389'
+  FOXY_API_KEY: 'N86y44B3NxJ375N'
+  FOXY_CART_URL: 'https://2rcdev.foxycart.com/cart'
+
+
+
+production:
+  THE_CITY_APP_ID:  '7cc514662a3dd0a8cc44a77782719a47a5a01158409bc5d60525bcde2ec904fa'
+  THE_CITY_SECRET: 'ec02d0d0661a5157503f5d7b0fdfe8fe063a49ea5faa02200e5937c973aa69c0'
+  AdminApi_THECITY_KEY: 'eb045bd903608a165e0c524e8bdda2f221a5c42e'
+  AdminApi_THECITY_TOKEN: '27a6d8d4d0643389'
+  FOXY_API_KEY: '5VT2D3q746Htj88'
+  FOXY_CART_URL: 'https://2rcknoxville.foxycart.com/cart'

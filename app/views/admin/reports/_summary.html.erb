@@ -1,0 +1,24 @@
+<table id="choicesTable" style="width: 50%;" class="with_borders">
+  <thead>
+  <th colspan="2" style="text-align: center">Event Totals</th>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Registrations</td>
+    <td style="text-align: right"><%= @registrations.count %></td>
+  </tr>
+  <tr>
+    <td>Guests</td>
+    <td style="text-align: right"><%= @event.registrations.joins(:registration_guests).where("amount_paid>=amount_payable").count %></td>
+  </tr>
+
+  <tr>
+    <th colspan="2" style="text-align: center">Choices</th>
+  </tr>
+  <%= addon_rows(@event).html_safe %>
+  <tr>
+    <td>Sales</td>
+    <td style="text-align: right"><%= "$%.2f" % @event.registrations.where("amount_paid>=amount_payable").sum('amount_paid') %></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,44 @@
+<%= stylesheet_link_tag "events_guest", :media => "all" %>
+
+<%= f.simple_fields_for "registration_guests_attributes[{guest_id}]", RegistrationGuest.new do |guest_form| %>
+  <% parent_name = guest_form.object_name %>
+
+  <fieldset id="guestTemplate">
+    <ul >
+      <h4 class='nolead'>{guest_name}</h4>
+      <li class="grid-12-12">
+        <%= guest_form.input :first, required: true %>
+      </li>
+      <li class="grid-12-12">
+        <%= guest_form.input :last, required: true %>
+      </li>
+      <li class="grid-12-12">
+        <%= guest_form.input :email %>
+      </li>
+      <li class="grid-12-12">
+        <%= guest_form.input :primary_phone, required: true  %>
+      </li>
+      <li class="grid-12-12">
+        <%= guest_form.input :address %>
+      </li>
+      <li class="grid-12-12">
+         <%= guest_form.input :city %>
+      </li>
+      <li class="grid-12-12">
+          <%= guest_form.input :state %>
+      </li>
+      <li class="grid-12-12">
+        <input type="checkbox" name="<%= parent_name %>[coming]"
+               id="<%= parent_name %>[coming]"
+               checked
+               class="person"
+               data-item-amount='<%= @event.base_price > 0 ? '%.2f' % @event.base_price : '0.00' %>'
+               onchange="removeGuest(this,'{guest_id}');"
+               />
+        <span class="overlay"></span>
+        <a id='remove_guest_' href="javascript:void(0);"><label for='<%= parent_name %>[coming]' class='right'>-Remove Guest</label></a>
+      </li>
+    </ul>
+  </fieldset>
+
+<% end %>

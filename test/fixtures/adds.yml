@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_addon: MyString
+  title: MyString
+  registration_type: false
+  evetns_id: 
+
+two:
+  event_addon: MyString
+  title: MyString
+  registration_type: false
+  evetns_id: 

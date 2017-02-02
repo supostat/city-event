@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: MyString
+  uid: MyString
+  email: MyString
+  refresh_token: MyString
+  token: MyString
+  first: MyString
+  last: MyString
+  gender: MyString
+  profile_picture: MyString
+  user_id: MyString
+  global_user_id: MyString
+  staff: false
+  account_id: MyString
+
+two:
+  provider: MyString
+  uid: MyString
+  email: MyString
+  refresh_token: MyString
+  token: MyString
+  first: MyString
+  last: MyString
+  gender: MyString
+  profile_picture: MyString
+  user_id: MyString
+  global_user_id: MyString
+  staff: false
+  account_id: MyString

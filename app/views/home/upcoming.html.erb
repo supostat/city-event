@@ -1,0 +1,57 @@
+<section id="upcoming-events">
+  <div class="row">
+      <h1 class="center"><span class="icon"> </span>Upcoming Events</h1>
+      <%= simple_form_for upcoming_path,:method => 'get' do |f| %>
+        <%= f.input :limit, :collection => [ ["Show 5 events",'5'] , [ "Show 10 events", '10'], [ "Show 15 events", '15']] ,selected: params[:limit] || '10'  , :label => false, :input_html => {:id => "limit",:name => "limit", :class => "small-12 medium-5 columns"} %>
+        <%= f.input :title, :label => false, :input_html => {:id => "title",:name => "title", :value => params[:title], :placeholder => 'search events', :class => "small-12 medium-5 medium-push-2 columns"} %>
+      <% end %>
+  </div>
+
+
+  <div class="clr"></div>
+      <ul id="events">
+        <%  @events.each do |event| %>
+            <li style="cursor:pointer;" onclick="$(this).find('a').first()[0].click();" class="row" >
+              <div class="small-9 medium-4 columns">
+                <div class="date"><%= event.start_date.strftime("%d") %><span><%= Date::MONTHNAMES[event.start_date.month] %></span></div>
+                <span class="title left"><%= eventLink(event) %></span>
+              </div>
+
+              <div class="small-6 medium-6 columns small-only-text-center">
+                  Register thru
+                  <%= Date::MONTHNAMES[event.start_date.month]+' '+ event.start_date.day.ordinalize %>
+              </div>
+
+                <div class='small-6 medium-2 columns'>
+                  <%= eventStatus(event.status(current_user)).html_safe %>
+                </div>
+
+              <div class="clr"></div>
+            </li>
+        <% end %>
+      </ul>
+
+  <div class="navigation-links">
+    <%= will_paginate @events, :page_links => false, :previous_label => '<',:next_label => '>' %>
+
+  </div>
+
+ <%= render "footer" %>
+
+</section>
+
+<script>
+    $('#limit').change(
+            function(){
+                $(this).closest('form').trigger('submit');
+            });
+
+    $("#title").keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $(this).closest('form').trigger('submit');
+        }
+    });
+
+
+</script>

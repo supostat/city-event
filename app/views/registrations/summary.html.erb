@@ -1,0 +1,81 @@
+<header class="center_stage">
+  <h1> Registration Summary</h1>
+  <div class="context_bar"></div>
+</header>
+<div class="grid_5 end_summary_lists">
+  <fieldset style="background-image:none;">
+    <h3 class="rule">Who you have selected</h3>
+    <ul class="person-list">
+      <% @registration.registration_guests.order(:last,:first).each do |member| %>
+          <li><%= member.first+' '+ member.last %>&nbsp;(<%= "$%.2f" % @registration.event.base_price  %>)</li>
+      <% end %>
+    </ul>
+    <h3 class="rule">What you have selected</h3>
+    <ul class="person-list">
+      <% @registration.summary.rows.each do |summary| %>
+          <li><%= summary[0]%>&nbsp;(<%= "$%.2f" % summary[1] %>)</li>
+      <% end %>
+    </ul>
+  </fieldset>
+  <span class="hidden" id="discount-area">
+      <h5>Amount: <%= "$%.2f" % @registration.amount_payable  %></h5>
+      <h5>Discount: $<span id="discounted_amount">0</span></h5>
+  </span>
+
+  <h5>Grand Total: <span id="grand_total"><%= "$%.2f" %  @registration.amount_payable  %></span></h5>
+
+  <%= form_tag("/registrations/verify_coupon", method: "post", :remote => true) do %>
+      <fieldset>
+        <ul>
+          <li class="grid-12-12">
+            Enter Coupon Code: <%= text_field_tag(:coupon) %>
+            <%= hidden_field_tag(:amount,@registration.amount_payable) %>
+            <%= hidden_field_tag(:registration,@registration.id) %>
+          </li>
+          <li class="grid-12-12">
+            <%= submit_tag("Apply Coupon",html_options = {:class => 'btn btn_mini'}) %>
+          </li>
+        </ul>
+        <div id="verify_result"></div>
+      </fieldset>
+  <% end %>
+
+  <form action="<%= TheCityEvents::FOXY_CART_URL %>" method="post" accept-charset="utf-8">
+
+    <input type="hidden" id="name" name="<%= CartEncryption::cart_input_name('name', @registration.event.title,"#{@registration.id}_#{current_user.id}") %>" value="<%= @registration.event.title %>" />
+    <input type="hidden" id="price" name="<%= CartEncryption::cart_input_name('price', @registration.amount_payable,"#{@registration.id}_#{current_user.id}") %>" value="<%= @registration.amount_payable %>" />
+    <input type="hidden" id="code" name="<%= CartEncryption::cart_input_name('code', "#{@registration.id}_#{current_user.id}" , "#{@registration.id}_#{current_user.id}") %>" value="<%= "#{@registration.id}_#{current_user.id}" %>" />
+    <input type="hidden" id="empty" name="empty" value="true" />
+    <input type="hidden" id="cart" name="cart" value="checkout" />
+    <input type="submit" value="Checkout" class="submit btn btn_go" id="checkout" />
+
+  </form>
+
+  <%= form_tag("/registrations/redeem_coupon", method: "post",:remote => true) do %>
+        <%= hidden_field_tag(:coupon_redeem,'') %>
+        <%= hidden_field_tag(:registration,@registration.id) %>
+
+        <%= submit_tag("Redeem Now",html_options = {:id => "redeem",:class => 'btn btn_go',:style=>"display: none;"}) %>
+
+
+
+  <% end %>
+
+  <a href="/"  class="submit btn btn_cancel"  > Cancel </a>
+
+
+</div>
+
+<div class="grid_3 omega">
+  <h3 class="rule">Coupons</h3>
+  <p>If you have a coupon code please enter it in the box below and to the left and then hit "Apply Coupon."</p>
+
+  <h3 class="rule">Checkout</h3>
+  <p>When you are ready to checkout please hit the "Checkout" below and the to left. You will be directed to our
+  merchant services checkout page and then will be returned back to The City.</p>
+
+  <%= link_to 'Made a mistake? Reset and go back.',registration_path(@registration,:redirect => events_url),
+              data: { confirm: 'Are you sure?' },
+              :method => :delete,
+              :class => "btn btn_stop" %>
+</div>

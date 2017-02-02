@@ -1,0 +1,13 @@
+<% if @event.addons.where(:registration_type => :false).count>0 %>
+    <fieldset class="options-person" data-for-person-id="<%= person_id %>" data-for-person-name="<%= person_id_name %>" style="<%= display_state ? "display:block;" : "display:none;" %>" >
+    <h4>Personal Options</h4>
+      <% registration.registration_addons.each do |a| %>
+          <%= f.simple_fields_for "registration_guests_attributes[#{ person_id}][registration_addons_attributes[#{a.addon.id}]]", a do |addon_form| %>
+              <%= render_addon_form_helper(a, addon_form, false) %>
+              <%= addon_form.hidden_field :addon_id %>
+          <% end %>
+      <% end %>
+    </fieldset>
+<% end %>
+
+

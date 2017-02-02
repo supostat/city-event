@@ -1,0 +1,30 @@
+<ul class="fields fieldsContainer">
+    <h3 class="handle">Addon</h3>
+    <li class="grid-4-12">
+      <%= f.label :addon_type %>
+      <%= f.select :addon_type, AddonForm::ADDON_TYPES, {:prompt => "Select Addon"}, {:required => true,:class => "ctrl_select addon_type",:onchange=>"addOnTypes_handler(this);"} %>
+    </li>
+    <li class="grid-6-12">
+      <label>&nbsp;</label>
+      <%= f.input :registration_type,:label=>false,collection:[['Registration Specific',true],['Registrant Specific',false]], as: :radio_buttons %>
+    </li>
+    <li class="grid-2-12">
+      <label>&nbsp;</label>
+      <%= link_to_remove_fields "Remove this Addon", f %>
+    </li>
+    <li class="grid-12-12">
+      <label form="mj_song">Title</label>
+      <%= f.input :title,:label => false %>
+    </li>
+    <li class="grid-12-12 choices" >
+      <h4 class="rule" >Choices</h4>
+      <fieldset style="background-image:none;margin-top:-10px !important;" class="choiceContainer">
+          <%= f.fields_for :choices do |choice| %>
+                <%= render 'choice_fields', :f => choice %>
+          <% end %>
+        <li class="form_footer">
+          <%= link_to_add_fields "Add Choice", f, :choices %>
+        </li>
+      </fieldset>
+    </li>
+  </ul>

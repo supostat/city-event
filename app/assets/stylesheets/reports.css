@@ -1,0 +1,50 @@
+@media print {
+    .noPrint {
+        display:none;
+    }
+}
+
+th,td {
+    white-space:nowrap;
+}
+
+/* Handling Guests Info */
+#guest_info .active-parent.open .toggle-icon {
+    background-position: -12px -12px;
+}
+#guest_info .active-parent .toggle-icon {
+    background-position: 0 -12px;
+}
+#guest_info .open .toggle-icon {
+    background-position: -12px 0;
+}
+
+#guest_info .toggle-icon {
+    width: 12px;
+    height: 12px;
+    display: block;
+    float: left;
+    margin: 1px 4px 0 0;
+    background: url(open-close-icons.png) no-repeat 0 0;
+}
+
+#registration_info a {
+    text-decoration: none;
+    display: block;
+    line-height: 1;
+    color: #4b4b4b;
+}
+
+#registration_info a {
+    color: #2c95b5;
+    text-decoration: none;
+}
+
+#guest_info .hide{
+    display:none;
+}
+
+#guest_info .show{
+    display:block;
+    text-align: center;
+}

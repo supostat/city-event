@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  city_user_id: 1
+  name: MyString
+  email: MyString
+  family_role: MyString
+  active: false
+  full_name: MyString
+  user_id: 
+
+two:
+  city_user_id: 1
+  name: MyString
+  email: MyString
+  family_role: MyString
+  active: false
+  full_name: MyString
+  user_id: 

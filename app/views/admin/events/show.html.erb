@@ -1,0 +1,42 @@
+<fieldset>
+  <header class="center_stage">
+    <h1> <%= @event.title %></h1>
+    <div class="context_bar"></div>
+
+  </header>
+
+   <%= render "admin/event_header" %>
+  <div class="grid_8 rule"></div>
+  <h4>Event Description </h4>
+  <%= @event.content.nil? ? '' : @event.content.html_safe  %>
+  <br/><br/>
+  <% @event.addons.order('id').each  do |add| %>
+      <h4 class=""><%= add.title %></h4><div class="grid_8 rule"></div>
+      <ul>
+        <li class="grid-12-12"><strong>Type : </strong><%= add.addon_type.split('::')[1] %> - <%= add.registration_type? ? "Registration Specific": "Registrant Specific" %> </li>
+
+        <% if add.choices.count > 0 %>
+            <h4 class="rule">
+              Choices
+            </h4>
+            <% add.choices.each  do |choice| %>
+                <ol>
+                  <li class="grid-6-12" data-value="<%= choice.id %>"><%= choice.title %></li>
+                  <li class="grid-2-12">Price: <%= '$%.2f' % choice.price %></li>
+                  <li class="grid-4-12">
+                    <% if add.addon_type == "Addons::Scale" %>
+                    Range From: <%= choice.range_from %> to <%= choice.range_to %>
+                    <% else %>
+                     &nbsp;
+                    <% end %>
+                  </li>
+
+                </ol>
+            <% end %>
+        <% end %>
+      </ul>
+  <% end %>
+
+</fieldset>
+
+<%= render 'admin/footer' %>

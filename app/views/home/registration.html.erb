@@ -1,0 +1,140 @@
+<%= simple_form_for([@event, @registration],url: complete_registration_path ) do |f| %>
+    <section id="event-registration" class="row">
+      <!--Register for-->
+      <h1><span class="icon"> </span> <%= @event.title %></h1>
+      <!--BEGIN: ERROR BLOCK-->
+      <div class="error prettyprint" style="display:none;">
+        <img src="<%= request.protocol+request.host_with_port+image_path('warning.gif') %>" alt="Warning!" width="24" height="24" style="float:left; margin: -5px 10px 0px 0px; " />
+        <span></span>.<br clear="all"/>
+      </div>
+      <% if @registration.errors.any? %>
+          <div id="error_explanation" class="prettyprint">
+            <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this event from being saved:</h2>
+            <ul>
+              <% @registration.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <!--BEGIN: HIDDEN FIELD BLOCK-->
+      <%= f.hidden_field :event_id %>
+      <%= f.hidden_field :amount_total %>
+      <%= f.hidden_field :amount_payable %>
+      <%= f.hidden_field :max_price,:value => @event.max_price  %>
+
+      <div class="left-sec small-12 medium-7 columns">
+
+        <% if not @event.content.empty? %>
+            <h2>Event Description</h2>
+            <div>
+                <%= @event.content.html_safe %>
+            </div>
+            <br /><br />
+        <% end %>
+
+        <h2>Who's Coming?</h2>
+        <p>Click a person to register them and fill out their personal options.</p>
+        <!--BEGIN Who is Coming Block-->
+        <div class="added-users">
+          <ul class="person-list">
+            <%= render 'home/partials/person',:f => f,:registration => @registration,:person_id => current_user.user_id,:person_picture =>  person_image(current_user.gender) ,:person_name => current_user.user_name, :checked_state => false, :display_state => false %>
+            <% @registration.family_members.each do |member| %>
+                <%= render 'home/partials/person',:f => f,:registration => @registration,:person_id => member.city_user_id,:person_picture => person_image('female'),:person_name =>  member.name, :checked_state => false, :display_state => false %>
+            <% end %>
+          </ul>
+        </div>
+        <!--END Who is Coming Block-->
+        <h3 style="margin-top: 1.5em;">Add More People</h3>
+        <div class="search-users row">
+          <%= f.text_field :city_users, :class => 'search autocomplete small-12 columns', 'data-autocomplete-url' => autocomplete_for_city_user_full_name_city_users_path,:placeHolder=>"Add registered City users to this event by searching here..." %>
+          <%= link_to_add_person_specific_options f,@registration,"plus",'home/partials/person',1 %>
+        </div>
+        <div class="non-registered">
+          <%= link_to_add_guest_specific_options 'Add a non-registered user',f,@registration,"addlink",'home/partials/guest' %> <span>(valid email required)</span>
+          <span id="guests"> </span>
+        </div>
+        <div class="addons">
+          <h3 style="margin-top: 1.5em;">Group Options</h3>
+
+          <% @registration.registration_addons.each do |a| %>
+              <%= f.simple_fields_for "registration_addons_attributes[#{a.addon.id}]", a do |addon_form| %>
+                  <%= addon_form.hidden_field :addon_id %>
+                  <%= render_addon_form_helper(a, addon_form,true) %>
+              <% end %>
+          <% end %>
+
+        </div>
+      </div>
+
+
+      <div class="right-sec small-12 medium-5 columns">
+
+        <h2>Summary</h2>
+        <%= render 'home/partials/summary' %>
+
+      </div>
+
+      <div class="clr"></div>
+
+
+    </section>
+<% end %>
+<script type="text/javascript">
+    $(document).ready(function() {
+        //Initailze Guest Count
+        jQuery(document).data('tcEvents.guests', 0);
+
+        jQuery("form").validate({
+            invalidHandler: function(e, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = errors == 1
+                            ? 'You missed 1 field. It has been highlighted below'
+                            : 'You missed ' + errors + ' fields.  They have been highlighted below';
+                    $("div.error span").html(message);
+                    $("div.error").show();
+                    setTimeout(function() {
+                        $("div.error").hide('slow');
+                    }, 2000);
+
+                } else {
+                    $("div.error").hide();
+                }
+            }
+        });
+
+        $( "#submit" ).click(function() {
+            event.preventDefault();
+            if ($("#who-view").find('li').length==0){
+                $("div.error span").html("No person selected to register");
+                $("div.error").show();
+                setTimeout(function() {
+                    $("div.error").hide('slow');
+                }, 2000);
+                return false;
+            }
+
+            $( "form" ).submit();
+        });
+
+        $(".non-registered .addlink").click(function(){
+            $(".non-registered .form-nonregistered ").addClass('active');
+        });
+
+        $(".non-registered .form-nonregistered .removeuser").click(function(){
+            $(".non-registered .form-nonregistered").removeClass('active');
+        });
+
+
+        $('.user .triggor').each(function() {
+            var expander = $(this), trig = expander.prev('a.options'), collapser = expander.next('div.collapsable');
+            trig.click(function() {
+                collapser.toggle(500);
+            });
+
+        });
+
+
+    });
+</script>

@@ -1,0 +1,112 @@
+<header class="center_stage">
+  <h1> Register for <%= @event.title %></h1>
+  <div class="context_bar"></div>
+</header>
+<div class="grid_5">
+
+  <%= simple_form_for([@event, @registration],url: events_path ) do |f| %>
+      <div class="error prettyprint" style="display:none;">
+        <img src="<%= request.protocol+request.host_with_port+image_path('warning.gif') %>" alt="Warning!" width="24" height="24" style="float:left; margin: -5px 10px 0px 0px; " />
+        <span></span>.<br clear="all"/>
+      </div>
+      <% if @registration.errors.any? %>
+          <div id="error_explanation" class="prettyprint">
+            <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this event from being saved:</h2>
+            <ul>
+              <% @registration.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <fieldset style="background-image:none;">
+
+        <%= f.hidden_field :event_id %>
+        <%= f.hidden_field :amount_total %>
+        <%= f.hidden_field :amount_payable %>
+        <%= f.hidden_field :max_price,:value => @event.max_price  %>
+
+        <% if not @event.content.nil? %>
+            <ul class="formee-list">
+                <li class="grid-12-12"><h3 class="rule">About</h3></li>
+                <li class="grid-12-12"><%= @event.content.html_safe %></li>
+            </ul>
+        <% end %>
+
+        <ul class="formee-list">
+          <%= render 'event_header' %>
+
+          <h3 class="rule">Who is coming?</h3>
+
+          <ul class="person-list">
+            <%= render 'events/person',:f => f,:registration => @registration,:person_id => current_user.user_id,:person_picture =>  person_image(current_user.gender) ,:person_name => current_user.user_name,:checked_state => false %>
+            <% @registration.family_members.each do |member| %>
+                <%= render 'events/person',:f => f,:registration => @registration,:person_id => member.city_user_id,:person_picture => person_image('female'),:person_name =>  member.name,:checked_state => false %>
+            <% end %>
+          </ul>
+
+
+          <h5 class="rule">Add a Guest Already in The City</h5>
+          <label class="block">Search for a user</label>
+          <ul>
+            <li class="grid-10-12">
+              <%= f.text_field :city_users, :class => 'autocomplete', 'data-autocomplete-url' => autocomplete_for_city_user_full_name_city_users_path %>
+            </li>
+            <li class="grid-2-12">
+                <%= link_to_add_person_specific_options f,@registration %>
+            </li>
+            <li class="grid-12-12">
+              <h3 class="guttertop">
+                <%= link_to_add_guest_specific_options '+Add a Guest Not on The City',f,@registration %>
+              </h3>
+            </li>
+          </ul>
+
+          <span id="guests"> </span>
+
+          <div class="addons">
+
+            <% @registration.registration_addons.each do |a| %>
+                <%= f.simple_fields_for "registration_addons_attributes[#{a.addon.id}]", a do |addon_form| %>
+                    <%= addon_form.hidden_field :addon_id %>
+                    <%= render_addon_form_helper(a, addon_form,true) %>
+                <% end %>
+            <% end %>
+
+          </div>
+          <li class="form_footer">
+            <%= f.submit :class => 'left btn btn_go' %>
+            <%= link_to "Cancel",root_path,:class => "btn btn_cancel left" %>
+          </li>
+
+        </ul>
+      </fieldset>
+  <% end %>
+
+</div>
+
+<%= render 'summary' %>
+
+
+<script>
+    jQuery(document).ready(function(){
+        jQuery(document).data('tcEvents.guests', 0);
+        jQuery("form").validate({
+            invalidHandler: function(e, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = errors == 1
+                            ? 'You missed 1 field. It has been highlighted below'
+                            : 'You missed ' + errors + ' fields.  They have been highlighted below';
+                    $("div.error span").html(message);
+                    $("div.error").show();
+                } else {
+                    $("div.error").hide();
+                }
+            }
+        });
+
+    })
+
+</script>

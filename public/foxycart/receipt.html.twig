@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Two Rivers Event Registration Checkout</title>
+
+    <link href="https://events.2rc.tv/css/styles.css" rel="stylesheet" type="text/css"/>
+
+    <script cache="false" src="https://events.2rc.tv/js/custom.js?body=1"></script>
+
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="row">
+            <div class="small-12 medium-6 columns">
+                <a class="logo" href="<%= root_path %>"><span>Two Rivers Church</span>Event Registration</a>
+            </div>
+        </div>
+    </header>
+
+
+    <section id="content-area">
+        <div class="container">
+
+        <section id="breadcrumb">
+            <div class="steps">
+                <a href="https://events.2rc.tv"></a>
+                <a href="https://events.2rc.tv"></a>
+                <a href="https://events.2rc.tv"></a>
+                <a href="https://events.2rc.tv"></a>
+                <a href="javascript:void(0);" title="checkout" class="selected"></a>
+            </div>
+            <div class="clr"></div>
+            <span class="title">5. Checkout</span>
+        </section>
+
+            <div class="border" id="event-registration">
+
+            <h1><span class="checkout icon"> </span>Receipt</h1>
+
+                <!-- Begin FoxyCart Code -->
+
+                <div class="row">
+
+                    <div class="small-12 medium-6 columns">
+                        {% block general_information %}
+                            <div id="fc_receipt_general_container" class="fc_fieldset_container ">
+                                <h2>{{ lang.checkout_general_information|raw }}</h2>
+                                <fieldset id="fc_receipt_general">
+                                    <legend>{{ lang.checkout_general_information|raw }}</legend>
+                                    <div class="fc_inner">
+                                        <ol id="fc_receipt_general_list">
+                                            <li class="fc_row fc_processor_response">
+                                                <span class="fc_pre">{{ lang.checkout_processor_response|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ processor_response }}</span>
+                                            </li>
+                                            <li class="fc_row fc_store_name">
+                                                <span class="fc_pre">{{ lang.checkout_merchant|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ store_name|raw }}</span>
+                                            </li>
+                                            <li class="fc_row fc_date">
+                                                <span class="fc_pre">{{ lang.checkout_date|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ checkout_date }}</span>
+                                            </li>
+                                        </ol>
+                                        <span class="fc_clear">&nbsp;</span>
+                                    </div><!-- .fc_inner -->
+                                </fieldset><!-- #fc_receipt_general -->
+                                <span class="fc_clear">&nbsp;</span>
+                            </div><!-- #fc_receipt_general_container -->
+                        {% endblock general_information %}
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                        {% block billing_information %}
+                            <div id="fc_receipt_billing_container" class="fc_fieldset_container ">
+                                <h2>{{ lang.checkout_billing_information|raw }}</h2>
+                                <fieldset id="fc_receipt_billing">
+                                    <legend>{{ lang.checkout_billing_information|raw }}</legend>
+                                    <div class="fc_inner">
+                                        <ol id="fc_receipt_billing_list">
+                                            <li class="fc_row fc_customer_first_name">
+                                                <span class="fc_pre">{{ lang.checkout_first_name|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ first_name }}</span>
+                                            </li>
+                                            <li class="fc_row fc_customer_last_name">
+                                                <span class="fc_pre">{{ lang.checkout_last_name|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ last_name }}</span>
+                                            </li>
+                                            {% if company != '' %}
+                                                <li class="fc_row fc_customer_company">
+                                                    <span class="fc_pre">{{ lang.checkout_company|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ company }}</span>
+                                                </li>
+                                            {% endif %}
+                                            <li class="fc_row fc_customer_address1">
+                                                <span class="fc_pre">{{ lang.checkout_address1|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ address1 }}</span>
+                                            </li>
+                                            {% if address2 != '' %}
+                                                <li class="fc_row fc_customer_address2">
+                                                    <span class="fc_pre">{{ lang.checkout_address2|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ address2 }}</span>
+                                                </li>
+                                            {% endif %}
+                                            <li class="fc_row fc_customer_city">
+                                                <span class="fc_pre">{{ lang.checkout_city|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ city }}</span>
+                                            </li>
+                                            {% if region_code != '' %}
+                                                <li class="fc_row fc_customer_state">
+                                                    <span class="fc_pre">{{ region_label }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ region_code }}</span>
+                                                </li>
+                                            {% endif %}
+                                            <li class="fc_row fc_customer_postal_code">
+                                                <span class="fc_pre">{{ lang.checkout_postal_code|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ postal_code }}</span>
+                                            </li>
+                                            <li class="fc_row fc_customer_country">
+                                                <span class="fc_pre">{{ lang.checkout_country|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ country_name }}</span>
+                                            </li>
+                                            <li class="fc_row fc_customer_email">
+                                                <span class="fc_pre">{{ lang.checkout_email|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ email }}</span>
+                                            </li>
+                                            {% if phone != '' %}
+                                                <li class="fc_row fc_customer_phone">
+                                                    <span class="fc_pre">{{ lang.checkout_phone|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ phone }}</span>
+                                                </li>
+                                            {% endif %}
+                                        </ol>
+                                        <span class="fc_clear">&nbsp;</span>
+                                    </div><!-- .fc_inner -->
+                                </fieldset><!-- #fc_receipt_billing -->
+                                <span class="fc_clear">&nbsp;</span>
+                            </div><!-- #fc_receipt_billing_container -->
+                        {% endblock billing_information %}
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                        {% block order_information %}
+                            <div id="fc_receipt_order_container" class="fc_fieldset_container ">
+                                <h2>{{ lang.checkout_order_information|raw }}</h2>
+                                <fieldset id="fc_receipt_order">
+                                    <legend>{{ lang.checkout_order_information|raw }}</legend>
+                                    <div class="fc_inner">
+                                        <ol id="fc_receipt_order_list">
+                                            <li class="fc_row fc_order_id">
+                                                <span class="fc_pre">{{ lang.checkout_order_id|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ order_id }}</span>
+                                            </li>
+                                            {% if purchase_order != '' %}
+                                                <li class="fc_row fc_purchase_order">
+                                                    <span class="fc_pre">{{ lang.checkout_purchase_order|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ purchase_order }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if payment_type == 'plastic' %}
+                                                <li class="fc_row fc_cc_number_masked">
+                                                    <span class="fc_pre">{{ lang.checkout_card_number|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ cc_number_masked }} ({{ cc_type }})</span>
+                                                </li>
+                                            {% endif %}
+                                            <li class="fc_row fc_order_subtotal">
+                                                <span class="fc_pre">{{ lang.checkout_subtotal|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ receipt_subtotal }}</span>
+                                            </li>
+                                            {% if has_future_products %}
+                                                <li class="fc_row fc_future_order_subtotal">
+                                                    <span class="fc_pre">{{ lang.cart_future_subscriptions|raw }} {{ lang.checkout_subtotal|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ receipt_future_subscriptions }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if has_shipping_or_handling_cost %}
+                                                <li class="fc_row fc_order_shipping">
+                                                    <span class="fc_pre">{{ lang.checkout_shipping|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ receipt_shipping_cost }}</span>
+                                                </li>
+                                                {% if has_future_shipping_and_handling %}
+                                                    <li class="fc_row fc_future_order_shipping">
+                                                        <span class="fc_pre">{{ lang.cart_future_subscriptions|raw }} {{ lang.checkout_shipping|raw }}<span class="fc_colon">:</span></span>
+                                                        <span class="fc_text">{{ receipt_future_shipping_cost }}</span>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if has_discount %}
+                                                <li class="fc_row fc_order_discount">
+                                                    <span class="fc_pre">{{ lang.checkout_discount|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ receipt_discount }}</span>
+                                                </li>
+                                            {% endif %}
+                                            {% if has_taxes %}
+                                                <li class="fc_row fc_order_tax">
+                                                    <span class="fc_pre">{{ lang.checkout_tax|raw }}<span class="fc_colon">:</span></span>
+                                                    <span class="fc_text">{{ receipt_tax }}</span>
+                                                </li>
+                                            {% endif %}
+                                            <li class="fc_row fc_order_total">
+                                                <span class="fc_pre">{{ lang.checkout_order_total|raw }}<span class="fc_colon">:</span></span>
+                                                <span class="fc_text">{{ order_total }}</span>
+                                            </li>
+                                        </ol>
+                                        <span class="fc_clear">&nbsp;</span>
+                                    </div><!-- .fc_inner -->
+                                </fieldset><!-- #fc_receipt_order -->
+                                <span class="fc_clear">&nbsp;</span>
+                            </div><!-- #fc_receipt_order_container -->
+                        {% endblock order_information %}
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                        <h2>Registration Overview</h2>
+
+                        <div clas="row">
+                            <div class="small-6 columns"><strong>Name</strong></div>
+                            <div class="small-2 columns"><strong>Cost</strong></div>
+                            <div class="small-2 columns"><strong>Qty</strong></div>
+                            <div class="small-2 columns"><strong>Total</strong></div>
+                        </div>
+
+                        {% block body %}
+                            {% for item in items %}
+                                <div clas="row">
+                                    <div class="small-6 columns">{{ item.name }}</div>
+                                    <div class="small-2 columns">{{ item.price_each }}</div>
+                                    <div class="small-2 columns">{{ item.quantity }}</div>
+                                    <div class="small-2 columns">{{ item.price_total }}</div>
+                                </div>
+                            {% endfor %}
+                        {% endblock %} <!-- end body-->
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 medium-6 columns">
+                        <a href="https://events.2rc.tv" class="green-btn">Return to Event Registration</a>
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                            <a href="http://2rc.onthecity.org" class="green-btn">Return to The City</a>
+                    </div>
+                </div>
+
+                <!-- End FoxyCart Code -->
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>

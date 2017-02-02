@@ -1,0 +1,35 @@
+table {
+    margin-bottom: -1px !important;
+
+}
+
+th, td {
+    vertical-align: text-top !important;
+    white-space: nowrap;
+    border-bottom: 0px solid !important;
+}
+
+table.with_borders {
+    border: 1px solid #ccc
+}
+table.with_borders tr {
+    border: 1px solid #ccc;
+}
+
+table.with_no_borders {
+    border: 1px solid #ffffff !important;
+}
+
+table.with_stripes_and_borders tbody tr:nth-child(even) td, table.with_stripes_and_borders tbody tr:nth-child(even) th, table.with_stripes_and_borders tbody tr.even td, table.with_stripes_and_borders tbody tr.even th {
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#80E2E2E2', endColorstr='#80E2E2E2');";
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#80E2E2E2', endColorstr='#80E2E2E2');
+    background-color: transparent;
+    background-color: rgba(226, 226, 226, 0.5);
+    zoom: 1 ;
+
+}
+
+table.with_stripes_and_borders td {
+    border: 1px solid #ccc;
+}
+

@@ -1,0 +1,6 @@
+<div class="field left">
+  <label> <%= a.addon.title %></label>
+  <%= addon_form.input :addon_value, collection: a.addon.choices.map{|a| ["#{a.title} #{ a.price > 0 ? ' - $%.2f' % a.price : ''}",a.id, {"data-title" => a.title},{"data-price" => a.price},{:"data-value" => "1"},{:"control-type" => "dropdown"} ]},prompt: "Choose"  , include_blank: false,input_html: { class: 'required price-option', :"data-type" => "addon_#{a.addon.id}",:"control-type" => "dropdown" }, label: false  %>
+  <%= addon_choices_dropdown(addon_form,a) %>
+</div>
+<div class="clr height15"></div>

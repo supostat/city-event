@@ -1,0 +1,120 @@
+<div class="row newSummary">
+  <h1 class="small-12 columns text-center"><span class="icon"> </span> <%= @registration.event.title %> </h1>
+
+  <h2 class="small-12 columns text-center">Registration Details</h2>
+</div>
+
+<section id="newSummary" class="row">
+  <div class="small-12 medium-10 medium-push-1 columns">
+
+    <div class="newCart">
+      <% #Loop over guests  %>
+      <% @registration.registration_guests.each do |member| %>
+          <div class="row priceRow">
+            <div class="newDes small-12 medium-8 medium-push-2 columns">
+              <span class="name"><%= member.first+' '+ member.last %></span>
+              <span class="newPrice"><%= "$%.2f" % @registration.event.base_price %></span>
+            </div>
+          </div>
+      <% end %>
+
+      <% #Loop over addons   %>
+      <% @registration.summary.rows.each do |summary| %>
+          <div class="row priceRow">
+            <div class="newDes small-12 medium-8 medium-push-2 columns">
+              <span class="addon"><%= summary[0] %></span>
+              <span class="addonPrice"><%= "$%.2f" % summary[1] %></span>
+            </div>
+          </div>
+      <% end %>
+
+      <% #Coupons  %>
+      <%= form_tag("/registrations/verify_coupon", method: "post", :remote => true) do %>
+          <div class="couponRow">
+            <div class="row">
+              <div class="title small-8 medium-push-2 columns">
+                Do you have a Coupon Code?
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="small-12 medium-8 medium-push-2 columns">
+                <%= text_field_tag(:coupon) %>
+              </div>
+            </div>
+
+            <div class="row">
+              <a id="applyCoupen" href="" class="link small-12 medium-8 medium-push-2 columns text-right">apply
+                coupon</a>
+            </div>
+
+            <div class="row">
+              <div id="verify_result" class="small-12 medium-8 medium-push-2 columns"></div>
+            </div>
+
+            <%= hidden_field_tag(:amount, @registration.amount_payable) %>
+            <%= hidden_field_tag(:registration, @registration.id) %>
+
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="small-12 medium-10 medium-push-1 columns">
+    <div id="newTotal">
+      Grand Total: <span id="grand_total"><%= "$%.2f" % @registration.amount_payable %></span>
+    </div>
+  </div>
+
+  <div class="small-12 medium-10 medium-push-1 columns">
+    <a id="checkout" href="#." class="green-btn">Complete CHECKOUT</a>
+  </div>
+
+
+  <form action="<%= TheCityEvents::FOXY_CART_URL %>" method="post" accept-charset="utf-8" id="foxycartform">
+
+    <input type="hidden" id="name" name="<%= CartEncryption::cart_input_name('name', @registration.event.title, "#{@registration.id}_#{current_user.id}") %>" value="<%= @registration.event.title %>"/>
+    <input type="hidden" id="price" name="<%= CartEncryption::cart_input_name('price', @registration.amount_payable, "#{@registration.id}_#{current_user.id}") %>" value="<%= @registration.amount_payable %>"/>
+    <input type="hidden" id="code" name="<%= CartEncryption::cart_input_name('code', "#{@registration.id}_#{current_user.id}", "#{@registration.id}_#{current_user.id}") %>" value="<%= "#{@registration.id}_#{current_user.id}" %>"/>
+    <input type="hidden" id="empty" name="empty" value="true" />
+    <input type="hidden" id="cart" name="cart" value="checkout" />
+    <input type="hidden" id="empty" name="empty" value="true"/>
+
+  </form>
+
+  <div class="note small-12 text-center columns">
+       <%= link_to 'Made a mistake? Delete and restart.',registration_path(@registration,:redirect => upcoming_url),
+                                data: { confirm: 'Are you sure?' },
+                                :method => :delete,
+                                :class => "red-btn" %>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+    $('#checkout').click(
+            function () {
+                event.preventDefault();
+                var grand_total = $('#grand_total').text();
+                if (parseFloat(grand_total.toString().replace('$', '')) <= 0) {
+                    alert('No Amount to Pay');
+                    return false;
+                }
+
+                $('#foxycartform').trigger('submit');
+            });
+
+    $('#applyCoupen').click(
+            function () {
+                event.preventDefault();
+
+                if ($("#coupon").val() == '') {
+                    alert('Please enter coupon code to apply.');
+                    return false;
+                }
+
+                $(this).closest('form').trigger('submit');
+            });
+</script>

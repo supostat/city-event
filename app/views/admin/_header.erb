@@ -1,0 +1,10 @@
+<header class="center_stage">
+<h1>Events Registration (Admin)</h1>
+  <p>
+    <% if current_user.nil? %>
+        Sign in
+    <% else %>
+        Welcome,<%= "#{current_user.first} #{current_user.last}" %>
+    <% end %>
+  </p>
+</header>

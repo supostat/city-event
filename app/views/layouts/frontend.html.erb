@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Registration</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+
+  <link href="//<%= request.host_with_port %>/css/styles.css" rel="stylesheet" type="text/css"/>
+
+  <%= javascript_include_tag "application", "jquery.validate", "jquery.maskedinput", "city-resizer", :cache => false %>
+  <script cache="false" src="//<%= request.host_with_port %>/js/custom.js?body=1"></script>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+<%= render "layouts/header" %>
+
+<section id="content-area">
+  <div class="container">
+
+    <%= render "layouts/breadcrumb" %>
+    <%= yield %>
+
+  </div>
+
+</section>
+<ul class="container">
+  <li class="small-12 columns noPrint"><%= debug(params) if Rails.env.development? %></li>
+</ul>
+</body>
+
+</html>

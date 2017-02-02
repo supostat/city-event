@@ -1,0 +1,578 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Two Rivers Event Registration Checkout</title>
+
+    <link href="https://events.2rc.tv/css/styles.css" rel="stylesheet" type="text/css"/>
+
+    <script cache="false" src="https://events.2rc.tv/js/custom.js?body=1"></script>
+
+</head>
+
+<body>
+
+<header class="main-header">
+    <div class="row">
+        <div class="small-12 medium-6 columns">
+            <a class="logo" href="https://events.2rc.tv"><span>Two Rivers Church</span>Event Registration</a>
+        </div>
+    </div>
+</header>
+
+
+<section id="content-area">
+<div class="container">
+
+<section id="breadcrumb">
+    <div class="steps">
+        <a href="https://events.2rc.tv"></a>
+        <a href="https://events.2rc.tv"></a>
+        <a href="https://events.2rc.tv"></a>
+        <a href="https://events.2rc.tv"></a>
+        <a href="javascript:void(0);" title="checkout" class="selected"></a>
+    </div>
+    <div class="clr"></div>
+    <span class="title">5. Checkout</span>
+</section>
+
+<div class="border" id="event-registration">
+
+<h1><span class="checkout icon"> </span>Checkout</h1>
+
+<!-- FoxyCart code starts here -->
+
+{% block checkout %}
+
+
+{# BEGIN CHECKOUT TWIG TEMPLATE #}
+<!-- ###########################################################################
+BEGIN checkout
+########################################################################### -->
+
+<!--  *********** fc_checkout_container ************* -->
+<div id="fc_checkout_container">
+{{ html_messages|raw }}
+<form id="fc_form_checkout" method="post" action="https://{{ store_domain }}{{ post_url }}" onsubmit="return false;">
+
+
+<div class="row"><!-- misc-->
+    {% block checkout_error %}
+        <div id="fc_form_checkout_error" class="fc_error" style="display:none">{{ lang.checkout_required_info_missing|raw }}</div>
+    {% endblock checkout_error %}
+
+
+
+    {% block required_hidden_fields %}
+        <div id="fc_required_hidden_fields">
+            <input type="hidden" id="ThisAction" name="ThisAction" value="checkout" />
+            <input type="hidden" id="customer_id" name="customer_id" value="{{ customer_id_encoded }}" />
+            <input type="hidden" name="{{ session_name }}" value="{{ session_id }}" />
+            {{ csrf_hidden_input|raw }}
+            {% if auth_token_is_valid %}
+                <input type="hidden" name="fc_auth_token" value="{{ fc_auth_token }}" />
+                <input type="hidden" name="timestamp" value="{{ timestamp }}" />
+                <input type="hidden" name="fc_customer_id" value="{{ fc_customer_id }}" />
+            {% endif %}
+            {# preserve paypal express variables #}
+            {% if token != '' and payer_id != '' %}
+                <input type="hidden" id="token" name="token" value="{{ token }}" />
+                <input type="hidden" id="PayerID" name="PayerID" value="{{ payer_id }}" />
+            {% endif %}
+            {% for var_name, var_value in hosted_gateway_vars %}
+                <input type="hidden" name="{{ var_name }}" value="{{ var_value }}" />
+            {% endfor %}
+        </div>
+    {% endblock required_hidden_fields %}
+
+
+
+    {#{% block continue_shopping %}#}
+    {#<div id="fc_cancel_continue_shopping" class="small-12 columns">#}
+    {#{% if page_referer != '' and not is_updateinfo %}#}
+    {#<a href="{{ page_referer }}">{{ lang.checkout_cancel_and_continue|raw }}</a>#}
+    {#{% endif %}#}
+    {#</div>#}
+    {#{% endblock continue_shopping %}#}
+
+
+
+    {% block noscript_warning %}
+        <noscript>
+            <div id="fc_error_noscript" class="fc_error small-12 columns">
+                <h3>{{ lang.checkout_warning|raw }}</h3>
+                <p>{{ lang.checkout_missing_message|raw }}</p>
+            </div><!-- #fc_errorNoScript -->
+        </noscript>
+    {% endblock noscript_warning %}
+</div><!-- End Misc -->
+
+
+
+<div class="row">
+    {% block login_register %}
+        <!--  *********** login_register : Login or Register ************* -->
+        <div class="fc_fieldset_container small-12 medium-6 columns" id="fc_login_register_container">
+            <h2>{% if checkout_type == 'guest_only' %}{{ lang.checkout_as_guest|raw }}{% else %}{{ lang.checkout_login_or_register|raw }}{% endif %}</h2>
+            <fieldset id="fc_login_register">
+                <!--<legend>{% if checkout_type == 'guest_only' %}{{ lang.checkout_as_guest|raw }}{% else %}{{ lang.checkout_login_or_register|raw }}{% endif %}</legend>-->
+                <div class="fc_inner">
+
+                    {% if not customer_is_authenticated %}
+                        <div class="row field">
+                            <label class="fc_pre small-12 columns" for="customer_email">{{ lang.checkout_email|raw }}<span class="fc_ast">*</span> <span class="fc_account_message right" id="fc_account_message_status">{{ lang.checkout_instructions_email|raw }}</span></label>
+                            <input type="text" value="{{ email }}" autocomplete="off" class="fc_text fc_text_long fc_required" id="customer_email" name="customer_email">
+
+                            <label style="display:none;" class="fc_error small-12 columns" for="customer_email">{{ lang.checkout_error_email|raw }}</label>
+                            <span style="display:none" id="login_ajax"><img alt="{{ lang.checkout_loading|raw }}" src="//cdn.foxycart.com/static{{ base_directory }}/images/ajax-loader.gif?ver=1"></span>
+                            <p style="display:none;" class="fc_account_message" id="fc_account_message_explanation"></p>
+                        </div>
+
+                        <div class="row field">
+                            {% if not is_updateinfo and checkout_type != 'guest_only' and checkout_type != 'account_only' %}
+                                <div class="small-12 medium-6 columns">
+                                    <label for="is_anonymous_1" class="fc_radio">
+                                        <input type="radio" name="is_anonymous" value="1" id="is_anonymous_1" class="fc_radio"{% if default_to_guest %} checked="checked"{% endif %} autocomplete="off"/>
+                                        <span>{{ lang.checkout_as_guest|raw }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="small-12 medium-6 columns">
+                                    <label for="is_anonymous_0" class="fc_radio">
+                                        <input type="radio" name="is_anonymous" value="0" id="is_anonymous_0" class="fc_radio"{% if not default_to_guest %} checked="checked"{% endif %} autocomplete="off" />
+                                        <span>{{ lang.checkout_as_customer|raw }}</span>
+                                    </label>
+                                </div>
+
+                            {% else %}
+                                {% if checkout_type == 'guest_only' %}
+                                    <input type="hidden" name="is_anonymous" id="is_anonymous" value="1" />
+                                {% else %}
+                                    <input type="hidden" name="is_anonymous" id="is_anonymous" value="0" />
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+
+                    {% else %}
+                        <div class="row field">
+                            <span class="fc_pre">{{ lang.checkout_email|raw }}<span class="fc_ast">*</span></span>
+                            <span id="customer_email_authenticated" class="fc_text">{{ email }}</span>
+                            <input type="hidden" name="customer_email" id="customer_email" value="{{ email }}" />
+                            <label for="customer_email" class="fc_error" style="display:none;">{{ lang.checkout_error_email|raw }}</label>
+                            <p id="fc_account_message_sso" class="fc_account_message">{{ lang.checkout_sso_already_logged_in|raw }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="row field">
+                        <div id="li_customer_password" class="small-12 medium-6 columns" style="display:none;" >
+                            <!--<li  class="fc_row fc_customer_password">-->
+                            <p style="display:none;" class="fc_account_message" id="fc_account_message_password"></p>
+                            <label class="fc_pre" for="customer_password">{{ lang.checkout_password|raw }}</label>
+                            <input type="password" value="{{ customer_password }}" autocomplete="off" class="fc_text fc_text_long" id="customer_password" name="customer_password">
+                            <label style="display:none;" class="fc_error" for="customer_password">{{ lang.checkout_error_password|raw }}</label>
+                        </div>
+
+                        <div id="li_customer_password2" class="small-12 medium-6 columns" style="display:none;">
+                            <!--<li id="li_customer_password2" style="display:none;" class="fc_row fc_customer_password2">-->
+                            <label class="fc_pre" for="customer_password2">{{ lang.checkout_retype_password|raw }}</label>
+                            <input type="password" value="{{ customer_password }}" autocomplete="off" class="fc_text fc_text_long" onchange="FC.checkout.checkPasswords()" id="customer_password2" name="customer_password2">
+                            <label style="display:none;" class="fc_error" for="customer_password2">{{ lang.checkout_error_retype_password|raw }}</label>
+                        </div>
+                    </div>
+
+                    <div id="li_customer_email_password" class="row field" style="display:none">
+                        <!--<li id="li_customer_email_password" class="fc_row" style="display:none">-->
+                        <label for="fc_email_password" class="fc_error"><a id="fc_email_password" href="javascript:;" onclick="FC.checkout.emailPassword()">{{ lang.checkout_email_my_password|raw }}</a></label>
+                    </div>
+
+                    <div id="li_customer_new_password" class="row field" style="display:none">
+                        <!--<li id="li_customer_new_password" class="fc_row" style="display:none">-->
+                        <label for="fc_new_password"><a id="fc_new_password" href="javascript:;" onclick="FC.checkout.newPassword()">{{ lang.checkout_change_my_password|raw }}</a></label>
+                    </div>
+
+                    <input type="hidden" name="email_found" id="email_found" value="{{ email_found }}" />
+                    <div id="fc_continue" class="fc_row fc_row_actions right"><a href="#" onclick="FC.checkout.checkLogin(); return false;" class="fc_link_nav fc_link_forward">{{ lang.checkout_continue|raw }}</a></div>
+                    <span class="fc_clear">&nbsp;</span>
+                </div><!-- .fc_inner -->
+            </fieldset><!-- #fc_login_register -->
+            <span class="fc_clear">&nbsp;</span>
+        </div><!-- #fc_login_register_container -->
+    {% endblock login_register %}
+
+
+    {% block checkout_shipping_and_summary %}
+        <!--  *********** shipping : Delivery &amp; Subtotal ************* -->
+        <div id="fc_shipping_container" class="fc_fieldset_container small-12 medium-6 columns cart"{% if is_updateinfo %} style="display:none;"{% endif %}>
+            <h2>Total</h2>
+            <fieldset id="fc_shipping">
+                <div class="fc_inner wrapper entry" id="who-view">
+                    <ol id="fc_shipping_list">
+                        <li class="fc_row fc_subtotal">
+                            <label for="subtotal" class="fc_pre name">{{ lang.checkout_cart_subtotal|raw }}</label>
+                            <span id="subtotal_formatted" class="fc_text price item-price-summary">{{ checkout_subtotal|money_format }}</span>
+                            <input value="{{ checkout_subtotal }}" type="hidden" name="subtotal" id="subtotal" />
+                        </li>
+                        <li class="fc_row fc_tax">
+                            <label for="tax" class="fc_pre name">{{ lang.checkout_tax|raw }}</label>
+                            <span id="tax_formatted" class="fc_text price item-price-summary">{{ checkout_tax|money_format }}</span>
+                            <input value="{{ checkout_tax }}" type="hidden" name="tax" id="tax" />
+                        </li>
+                        <li class="fc_row fc_order_total">
+                            <label for="order_total" class="fc_pre name">{{ lang.checkout_order_total|raw }}</label>
+                            <span id="order_total_formatted" class="fc_text price item-price-summary">{{ checkout_order_total|money_format }}</span>
+                            <input value="{{ checkout_order_total }}" type="hidden" name="order_total" id="order_total" />
+                        </li>
+                    </ol>
+                    <span class="fc_clear">&nbsp;</span>
+                </div><!-- .fc_inner -->
+            </fieldset><!-- #fc_shipping -->
+            <span class="fc_clear">&nbsp;</span>
+        </div><!-- #fc_shipping_container -->
+    {% endblock checkout_shipping_and_summary %}
+</div><!-- End login & summary -->
+
+
+<div class="row"><!-- Billing & payment info -->
+{% block customer_billing %}
+    <!--  *********** customer_billing : Billing Address ************* -->
+    <div class="fc_fieldset_container small-12 medium-6 columns" id="fc_customer_billing_container">
+        <h2>{{ lang.checkout_billing_address|raw }}</h2>
+        <fieldset id="fc_customer_billing">
+            <div class="fc_inner">
+                <div id="fc_customer_billing_list" class="field">
+
+                    <input name="customer_country" value="US" type="hidden" />
+
+                    <div>
+                        <div class="fc_row fc_customer_first_name small-12 medium-6 columns">
+                            <label class="fc_pre" for="customer_first_name">{{ lang.checkout_first_name|raw }}<span class="fc_ast">*</span></label>
+                            <input type="text" value="{{ first_name }}" class="fc_text fc_text_long fc_required" id="customer_first_name" name="customer_first_name" autocomplete="billing given-name">
+                            <label style="display:none;" class="fc_error" for="customer_first_name">{{ lang.checkout_error_first_name|raw }}</label>
+                        </div>
+
+                        <div class="fc_row fc_customer_last_name small-12 medium-6 columns">
+                            <label class="fc_pre" for="customer_last_name">{{ lang.checkout_last_name|raw }}<span class="fc_ast">*</span></label>
+                            <input type="text" value="{{ last_name }}" class="fc_text fc_text_long fc_required" id="customer_last_name" name="customer_last_name" autocomplete="billing family-name">
+                            <label style="display:none;" class="fc_error" for="customer_last_name">{{ lang.checkout_error_last_name|raw }}</label>
+                        </div>
+                    </div>
+
+                    <div class="fc_row fc_customer_address1">
+                        <label class="fc_pre" for="customer_address1">{{ lang.checkout_address1|raw }}<span class="fc_ast">*</span></label>
+                        <input type="text" value="{{ address1 }}" class="fc_text fc_text_long fc_required" id="customer_address1" name="customer_address1" autocomplete="billing address-line1">
+                        <label style="display:none;" class="fc_error" for="customer_address1">{{ lang.checkout_error_address1|raw }}</label>
+                    </div>
+                    <div class="fc_row fc_customer_address2">
+                        <label class="fc_pre" for="customer_address2">{{ lang.checkout_address2|raw }}</label>
+                        <input type="text" value="{{ address2 }}" class="fc_text fc_text_long" id="customer_address2" name="customer_address2" autocomplete="billing address-line2">
+                    </div>
+                    <div class="fc_row fc_customer_city">
+                        <label class="fc_pre" for="customer_city">{{ lang.checkout_city|raw }}<span class="fc_ast">*</span></label>
+                        <input type="text" value="{{ city }}" class="fc_text fc_text_long fc_required" id="customer_city" name="customer_city" autocomplete="billing locality">
+                        <label style="display:none;" class="fc_error" for="customer_city">{{ lang.checkout_error_city|raw }}</label>
+                    </div>
+
+                    <div>
+                        <div class="fc_row fc_row_select fc_foxycomplete fc_customer_state small-12 medium-6 columns">
+                            <label class="fc_pre" for="customer_state">{{ lang.checkout_state|raw }}<span class="fc_ast">*</span></label>
+
+                            <select name="customer_state" id="customer_state">
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">Dist of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+
+                            <input value="{{ (region_code == '') ? region_name : region_code }}" type="text" style="display:none;" class="fc_foxycomplete_input fc_text fc_text_long fc_required fc_location" id="customer_state_name" name="customer_state_name">
+                            <label style="display:none;" class="fc_error" for="customer_state_name">{{ lang.checkout_error_state|raw }}</label>
+                        </div>
+                        <div class="fc_row fc_customer_postal_code small-12 medium-6 columns">
+                            <label class="fc_pre" for="customer_postal_code">{{ lang.checkout_postal_code|raw }}<span class="fc_ast">*</span></label>
+                            <input type="text" value="{{ postal_code }}" class="fc_text fc_text_short fc_required" id="customer_postal_code" name="customer_postal_code" autocomplete="billing postal-code">
+                            <label style="display:none;" class="fc_error" for="customer_postal_code">{{ lang.checkout_error_postal_code|raw }}</label>
+                            <label style="display:none;" class="fc_error fc_error_invalid_postal_code" for="customer_postal_code">{{ lang.checkout_error_invalid_postal_code|raw }}</label>
+                        </div>
+                    </div>
+                </div>
+                {% if has_shippable_products and not has_multiship %}
+                    <div class="fc_row fc_row_checkbox" id="fc_use_different_address">
+                        <label class="fc_checkbox" for="use_different_addresses">
+                            <input{% if use_alternate_shipping_address %} checked="checked"{% endif %} type="checkbox" onclick="FC.checkout.displayShippingAddress(this)" class="checkbox" value="1" id="use_different_addresses" name="use_different_addresses">
+                            <span>{{ lang.checkout_use_shipping_address|raw }}</span>
+                        </label>
+                    </div>
+                {% endif %}
+                <span class="fc_clear">&nbsp;</span>
+            </div><!-- .fc_inner -->
+        </fieldset><!-- #fc_customer_billing -->
+        <span class="fc_clear">&nbsp;</span>
+    </div>
+{% endblock customer_billing %}
+
+{% block checkout_payment %}
+<!--  *********** payment : Payment Information ************* -->
+<div id="fc_payment_container" class="fc_fieldset_container medium-6 small-12 columns">
+    <h2>{{ lang.checkout_payment_information|raw }} {% if supports_pay_with_plastic %}<span>{{ lang.checkout_pay_with_credit_card|raw }}</span> {%  endif %}</h2>
+    <fieldset id="fc_payment">
+        <div class="fc_inner field">
+            <ol id="fc_payment_list">
+
+                {% if supports_paypal_express and not is_updateinfo %}
+                    <li id="fc_payment_method_paypal_container" class="fc_row fc_row_payment_method">
+                        {% if has_multiple_payment_options %}
+                            <label for="fc_payment_method_paypal" class="fc_radio">
+                                <input type="{{ payment_method_input_type }}"{% if payment_method_type == 'paypal' %} checked="checked"{% endif %} name="fc_payment_method" id="fc_payment_method_paypal" class="fc_radio" value="paypal" autocomplete="off" />
+                                <span>{{ lang.checkout_pay_with_paypal|raw }}</span>
+                            </label>
+                        {% else %}
+                            <input type="hidden" name="fc_payment_method" id="fc_payment_method" value="paypal" />
+                            <span>{{ lang.checkout_pay_with_paypal|raw }}</span>
+                        {% endif %}
+                        <fieldset>
+                            <p>{{ paypal_description|raw }}</p>
+                        </fieldset>
+                    </li>
+                {% endif %}{# supports_paypal_express and not is_updateinfo #}
+
+                {% if supports_pay_with_plastic %}
+                    <li id="fc_payment_method_plastic_container" class="fc_row fc_row_payment_method">
+                        <label for="fc_payment_method_plastic" class="fc_radio">
+                            <input type="{{ payment_method_input_type }}"{% if payment_method_type == 'plastic' %} checked="checked"{% endif %} name="fc_payment_method" id="fc_payment_method_plastic" class="fc_radio" value="plastic" autocomplete="off" />
+                            Credit Card
+                        </label>
+                        {% if has_multiple_payment_options %}
+                        <fieldset>
+                            <ol>
+                        {% else %}
+                    </li>
+
+
+                {% endif %}{# has_multiple_payment_options #}
+                    <li id="li_cc_saved" class="fc_row fc_row_radio">
+                        <label for="c_card_saved" class="fc_radio">
+                            <input{% if cc_card_is_saved %} checked="checked"{% endif %} type="radio" name="c_card" value="saved" id="c_card_saved" class="fc_radio" onclick="FC.checkout.displayNewCC(0)" autocomplete="off" />
+                            <span>{{ lang.checkout_use_saved_payment_info|raw }}</span>
+                            <span id="fc_c_card_saved_number">{{ checkout_cc_number_masked }}</span>
+                        </label>
+                    </li>
+                    <li id="li_cc_new" class="fc_row fc_row_radio">
+                        <label for="c_card_new" class="fc_radio">
+                            <input{% if not cc_card_is_saved %} checked="checked"{% endif %} type="radio" name="c_card" value="new" id="c_card_new" class="fc_radio" onclick="FC.checkout.displayNewCC(1)" autocomplete="off" />
+                            <span>{{ lang.checkout_enter_new_card|raw }}</span>
+                        </label>
+                    </li>
+                    <li id="li_cc_number" class="fc_row li_cc_number">
+                        <label for="cc_number" class="fc_pre">{{ lang.checkout_card_number|raw }}</label>
+                        <input type="text" name="cc_number" id="cc_number" class="fc_text fc_text_long fc_required" autocomplete="off" value="{{ cc_number }}" />
+                        <label for="cc_number" class="fc_error" style="display:none">{{ lang.checkout_error_card_number|raw }}</label>
+                    </li>
+                    <li id="li_cc_cvv2" class="fc_row li_cc_cvv2">
+                        <label for="cc_cvv2" class="fc_pre">
+                            {{ lang.checkout_verification_code|raw }}
+                            <span id="fc_help_cvv2" class="fc_help">(<a id="fc_help_cvv2_link" class="fc_help fc_jTip" href="https://{{ store_domain }}{{ base_directory }}/checkout.help.php?topic=cvv2&amp;width=308">{{ lang.checkout_question_mark|raw }}</a>)</span>
+                        </label>
+                        <input value="{{ cc_cvv2 }}" type="text" name="cc_cvv2" id="cc_cvv2" autocomplete="off" class="fc_text fc_text_short fc_required" maxlength="4" />
+                        <label for="cc_cvv2" class="fc_error" style="display:none">{{ lang.checkout_error_verification_code|raw }}</label>
+                    </li>
+                    <li id="li_cc_issue_number" class="fc_row">
+
+                        <label for="cc_issue_number" class="fc_pre">
+                            {{ lang.checkout_issue_number|raw }}
+                        </label>
+                        <input value="{{ cc_issue_number }}" type="text" name="cc_issue_number" id="cc_issue_number" class="fc_text fc_text_short fc_required" maxlength="2" />
+                        <label for="cc_issue_number" class="fc_error" style="display:none">{{ lang.checkout_error_issue_number|raw }}</label>
+                    </li>
+                    <li id="li_cc_start_date_month" class="fc_row">
+                        <label for="cc_start_date_month" class="fc_pre">{{ lang.checkout_start_date|raw }}</label>
+                        <select id="cc_start_date_month" name="cc_start_date_month" class="inline select_mo">
+                            <option value="">{{ lang.cart_month|raw }}</option>
+                            {{ cc_start_date_month_options|raw }}
+                        </select>
+                        <select id="cc_start_date_year" name="cc_start_date_year" class="inline select_yr">
+                            <option value="">{{ lang.cart_year|raw }}</option>
+                            {{ cc_start_date_year_options|raw }}
+                        </select>
+                        <label for="cc_start_date_month" class="fc_error" style="display:none">{{ lang.checkout_error_start_date|raw }}</label>
+                    </li>
+                    <li id="li_cc_exp_month" class="fc_row">
+                        <div class="small-6 columns">
+                            <label for="cc_exp_month" class="fc_pre">{{ lang.checkout_expiration|raw }}</label>
+                            <select id="cc_exp_month" name="cc_exp_month" class="inline select_mo">
+                                <option value="">{{ lang.cart_month|raw }}</option>
+                                {{ cc_expiration_month_options|raw }}
+                            </select>
+                        </div>
+
+                        <div class="small-6 columns">
+                            <label for="cc_exp_year" class="fc_pre">Year</label>
+                            <select id="cc_exp_year" name="cc_exp_year" class="inline select_yr">
+                                <option value="">{{ lang.cart_year|raw }}</option>
+                                {{ cc_expiration_year_options|raw }}
+                            </select>
+                            <label for="cc_exp_month" class="fc_error" style="display:none">{{ lang.checkout_error_expiration|raw }}</label>
+                        </div>
+                    </li>
+
+                    <li id="li_save_cc" class="fc_row fc_row_checkbox">
+                        <label for="save_cc" class="fc_checkbox">
+                            <input{% if save_cc_is_checked %} checked="checked"{% endif %} type="checkbox" name="save_cc" id="save_cc" value="1" class="fc_checkbox" />
+                            <span>{{ save_cc_text }}</span>
+                        </label>
+                        <label for="save_cc" class="fc_error" style="display:none">{{ lang.checkout_error_subscription_permission|raw }}</label>
+                        <input type="hidden" name="cc_number_masked" id="cc_number_masked" value="{{ checkout_cc_number_masked }}" />
+                    </li>
+                {% if has_multiple_payment_options %}
+            </ol>
+    </fieldset>
+    </li>
+    {% endif %}{# has_multiple_payment_options #}
+    {% endif %}{# supports_pay_with_plastic #}
+
+    {% if not is_updateinfo %}
+        {% for hosted_gateway in hosted_payment_gateways %}
+            <li id="fc_payment_method_{{ hosted_gateway.type }}_container" class="fc_row fc_row_payment_method fc_row_hosted_payment_method">
+                {% if has_multiple_payment_options %}
+                    <label class="fc_radio">
+                        <input type="{{ payment_method_input_type }}"{% if payment_method_type == hosted_gateway.type %} checked="checked"{% endif %} name="fc_payment_method" id="fc_payment_method_{{ hosted_gateway.type }}" class="fc_radio" value="{{ hosted_gateway.type }}" autocomplete="off" />
+                        <span>{{ hosted_gateway.lang_pay_with|raw }}</span>
+                    </label>
+                {% else %}
+                    <input type="hidden" name="fc_payment_method" id="fc_payment_method_{{ hosted_gateway.type }}" value="{{ hosted_gateway.type }}" />
+                    <span>{{ hosted_gateway.lang_pay_with|raw }}</span>
+                {% endif %}
+                <fieldset>
+                    <p>{{ hosted_gateway.lang_payment_method|raw }}</p>
+                </fieldset>
+            </li>
+        {% endfor %}
+    {% endif %}{# not is_updateinfo #}
+
+    {% if supports_purchase_order and not is_updateinfo %}
+        <li id="fc_payment_method_purchase_order_container" class="fc_row fc_row_payment_method">
+        <label for="fc_payment_method_purchase_order" class="fc_radio">
+            <input type="{{ payment_method_input_type }}"{% if payment_method_type == 'purchase_order' %} checked="checked"{% endif %} name="fc_payment_method" id="fc_payment_method_purchase_order" class="fc_radio" value="purchase_order" autocomplete="off" />
+            <span>{{ lang.checkout_pay_with_purchase_order|raw }}</span>
+        </label>
+        {% if has_multiple_payment_options %}
+            <fieldset>
+            <ol>
+        {% else %}
+            </li>
+        {% endif %}{# has_multiple_payment_options #}
+        <li id="li_purchase_order" class="fc_row li_purchase_order">
+            <label for="purchase_order" class="fc_pre">
+                {{ lang.checkout_purchase_order_number|raw }}
+            </label>
+            <input value="{{ purchase_order }}" type="text" name="purchase_order" id="purchase_order" class="fc_text fc_required" />
+            <label for="purchase_order" class="fc_error" style="display:none">{{ lang.checkout_error_purchase_order|raw }}</label>
+        </li>
+        {% if has_multiple_payment_options %}
+            </ol>
+            </fieldset>
+            </li>
+        {% endif %}{# has_multiple_payment_options #}
+    {% endif %}{# supports_purchase_order and not is_updateinfo #}
+
+    <li id="li_nopayment" class="fc_row">
+        {# This is used for $0 transactions and other situations where no payment info is collected #}
+        {{ lang.checkout_no_payment_needed|raw }}
+    </li>
+    </ol>
+
+    <div id="fc_complete_order_button_container" class="fc_row fc_row_actions green-btn" style="margin-top: 1em">
+        <a href="javascript:void(0);" onclick="FC.checkout.validateAndSubmit()">Click Here to Register</a>
+        <div id="fc_complete_order_processing" style="display:none;"><strong class="fc_error"></strong> <br /><img src="//cdn.foxycart.com/static{{ base_directory }}/images/ajax-loader.gif?ver=1" alt="{{ lang.checkout_loading|raw }}" width="220" height="19" /></div>
+    </div><!-- #fc_complete_order_button_container -->
+
+    <span class="fc_clear">&nbsp;</span>
+</div><!-- .fc_inner -->
+</fieldset><!-- #fc_payment -->
+<span class="fc_clear">&nbsp;</span>
+</div><!-- #fc_payment_container -->
+{% endblock checkout_payment %}
+
+</div><!-- End Billing & Payment info -->
+
+<div id="fc_data_entry_container">
+    <div id="fc_customer_info_container">
+
+    </div><!-- #fc_customer_info_container -->
+
+    {# This place holder is here for backward compatibility so that custom fields will be injected into the correct place. #}
+    ^^custom_fields^^
+
+</div><!-- #fc_data_entry_container -->
+
+</form>
+<span class="fc_clear">&nbsp;</span>
+</div><!-- #fc_checkout_container -->
+
+
+
+<!-- ###########################################################################
+    END checkout
+    ########################################################################### -->
+{# END CHECKOUT TWIG TEMPLATE #}
+
+
+
+{% endblock checkout %}
+
+
+
+<!-- End FoxyCart Code -->
+
+</div>
+</div>
+</section>
+</body>
+</html>

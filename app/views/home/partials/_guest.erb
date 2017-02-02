@@ -1,0 +1,42 @@
+<%= f.simple_fields_for "registration_guests_attributes[{guest_id}]", RegistrationGuest.new do |guest_form| %>
+  <% parent_name = guest_form.object_name %>
+
+  <fieldset id="guestTemplate" class="guest-list">
+    <h4 class='nolead'>{guest_name}</h4>
+    <div class="field left">
+      <%= guest_form.input :first, required: true,:label => "First Name" %>
+    </div>
+    <div class="field right">
+      <%= guest_form.input :last, required: true,:label => "Last Name" %>
+    </div>
+    <div class="clr height5"></div>
+    <div class="field">
+      <label> Email Address</label>
+      <%= guest_form.input :email,required: true, :label => false %>
+    </div>
+    <div class="clr height5"></div>
+    <div class="field">
+      <label>Primary Phone</label>
+      <%= guest_form.input :primary_phone, required: true,:label => false  %>
+    </div>
+    <% if @event.addons.where(:registration_type => :false).count>0 %>
+         <div class="clr height5"></div>
+         <a class="options" title="Click to view options for {guest_name}" style="cursor: pointer;" onclick="$(this).next('.options-person').toggle(500); return false;">options</a>
+    <% end %>
+
+    <div class="clr height15"></div>
+    <input type="checkbox" name="<%= parent_name %>[coming]"
+           id="<%= parent_name %>[coming]"
+           checked
+           class="person"
+           data-item-amount='<%= @event.base_price %>'
+           onchange="removeGuest(this,'{guest_id}');"
+    />
+    <span class="overlay"></span>
+    <a id='remove_guest_'  href="javascript:void(0);" style="float: right;"><label style="cursor: auto;" for='<%= parent_name %>[coming]' class='right' >Remove Guest</label></a>
+    <div class="clr height15"></div>
+
+
+  </fieldset>
+
+<% end %>

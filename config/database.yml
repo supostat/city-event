@@ -1,0 +1,16 @@
+development:
+  adapter: sqlite3
+  encoding: unicode
+  database: db/city-texting-dev
+  pool: 5
+
+
+#development:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: event-regisration-dev
+#  pool: 5
+#  host: localhost
+#  username: rails
+#  password: rails
+#  min-messages: warning

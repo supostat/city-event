@@ -1,0 +1,56 @@
+<span class="noPrint">
+  <%= render 'admin/header' %>
+</span>
+
+<h1><%= @event.title %></h1>
+<h2>Detail Report</h2>
+<%= render "admin/event_header" %>
+
+<%= stylesheet_link_tag request.protocol+request.host_with_port+stylesheet_path("reports_detail"), :media => "all" %>
+
+<table class="with_borders">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Registration</th>
+    <th>Guests</th>
+    <%= addons_headings(@event, false).html_safe %>
+    <%= addons_headings(@event, true).html_safe %>
+    <th>Coupon</th>
+    <th>Total</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @registrations.each do |r| %>
+      <tr>
+        <td><%= "#{r.created_at.strftime("%m/%d/%Y")}" %></td>
+        <td id='registration_info'><a href="http://2rc.onthecity.org/users/<%= "#{r.user.user_id}" %>" target="_blank"><%= "#{r.user.user_name}" %></a></td>
+        <td><a class="btn btn_neutral btn_mini noPrint" onclick="toggleRow(this,<%= r.id%>);">Show details</a></td>
+        <%= addons_headings_placeholder(@event, false).html_safe %>
+        <%= registration_specific_choices(@event, r).html_safe %>
+        <td><%= r.coupon==''? '' : r.coupon %><%=  r.coupon==''? '' : ' ('+"$%.2f" % r.coupon_amount+')' %></td>
+        <td><%= "$%.2f" % r.amount_payable %></td>
+      </tr>
+      <tr class="detail_<%= r.id %>" style="display: none;">
+        <td colspan="2" style="border-bottom: 1px solid #fff !important;"></td>
+        <td><%= guests(r).html_safe %></td>
+        <%= addons_values(@event, r).html_safe %>
+        <%= addons_headings_placeholder(@event, true).html_safe %>
+        <td><%= guest_row_totals(@event, r).html_safe %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<p>
+  <%= render "summary" %>
+</p>
+
+
+<span class="noPrint">
+      <a href="#" class="btn btn_neutral" onclick="javascript:window.print(); return true;">Print Report</a>
+      <%#= link_to "CSV", admin_detail_path(format: "csv"),html_options = {:class => 'btn btn_neutral'} %>
+      <%= link_to "CSV Download", admin_detail_path(format: "csv"),html_options = {:class => 'btn btn_neutral'} %>
+      <%= link_to "Excel Download", admin_detail_path(format: "xls"),html_options = {:class => 'btn btn_neutral'} %>
+      <p></p>
+      <%= render 'admin/footer' %>
+</span>

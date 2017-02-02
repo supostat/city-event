@@ -1,0 +1,49 @@
+var message = '<%= @message %>';
+if(message=='Success')
+{
+    var pathArray = window.location.pathname.split( '/' );
+    if(pathArray[1]=='registrations')
+        window.location = '/events';
+    else
+      window.location = '/upcoming-events';
+}
+
+$('#verify_result').html(message);
+
+var discount =  '<%= @discount_amount %>' ;
+var actual='<%= params[:amount] %>';
+var coupon ='<%= params[:coupon] %>';
+
+if (discount >= 0)
+{
+
+    var discounted_amount = actual-discount;
+    discounted_amount = discounted_amount.toFixed(2);
+
+    $('#discounted_amount').html(discounted_amount);
+    $('#grand_total').html('$' + discount);
+    $('#coupon').val(coupon);
+
+    $('#name').attr('name','<%= @field_name %>');
+    $('#price').attr('name','<%= @field_price %>');
+    $('#code').attr('name','<%= @field_code %>');
+
+    $('#name').val('<%= @registration.event.title %>');
+    $('#price').val(discount);
+    $('#code').val('<%= @code_string %>');
+
+
+    if(discount<=0){
+        $('#coupon_redeem').val(coupon);
+        $("#checkout").hide();
+        $("#redeem").show();
+    }
+    else
+    {
+        $('#coupon_redeem').val('');
+        $("#checkout").show();
+        $("#redeem").hide();
+    }
+
+    $('#discount-area').slideDown();
+}

@@ -1,0 +1,13 @@
+if ('<%= @message %>'=='Success')
+{
+    var pathArray = window.location.pathname.split( '/' );
+    if(pathArray[1]=='registrations')
+        window.location = '/events';
+    else
+        window.location = '/upcoming-events';
+
+}
+
+else
+$('#verify_result').html('<%= @message %>');
+

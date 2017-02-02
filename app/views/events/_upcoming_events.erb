@@ -1,0 +1,27 @@
+<% if @up_coming_events.count >0  %>
+    <h3 class="rule">Upcoming Events</h3>
+    <table id="upcoming_events" class='datatable with_stripes autosort'>
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th data-autosort="true" data-sortdir="desc">Start Date</th>
+        <th>End Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%  @up_coming_events.each do |event| %>
+          <tr id="<%= dom_id(event) %>">
+            <td><%= link_to event.title,register_event_path(event.id) %></td>
+            <td><%= event.start_date.strftime("%m/%d/%Y") %></td>
+            <td><%= event.end_date.strftime("%m/%d/%Y") %></td>
+            <td><%= event.start_time.strftime("%I:%M%p") %></td>
+            <td><%= event.end_time.strftime("%I:%M%p") %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3 class="rule">There are no more upcoming events</h3>
+<% end %>

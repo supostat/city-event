@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  addon_id: 
+  title: MyString
+  price: 1.5
+  range_from: 1
+  range_to: 1
+
+two:
+  addon_id: 
+  title: MyString
+  price: 1.5
+  range_from: 1
+  range_to: 1

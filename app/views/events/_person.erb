@@ -1,0 +1,28 @@
+<li class="grid-12-12 checkbox-person" data-person="<%= person_name %>">
+  <%= f.simple_fields_for "registration_guests_attributes[#{person_id}]", RegistrationGuest.new do |person_form| %>
+      <%= person_form.input :city_user_id, :input_html => {:value => person_id}, :as => :hidden %>
+      <%= person_form.input :first, :input_html => {:value => person_name.split[0]}, :as => :hidden %>
+      <%= person_form.input :last, :input_html => {:value => person_name.split[1]}, :as => :hidden %>
+
+      <label for="<%= person_form.object_name %>[coming]">
+                  <span class="checkbox" style="background-image: url(<%= person_picture %>)">
+                    <input type="checkbox" name="<%= person_form.object_name %>[coming]" id="<%= person_form.object_name %>[coming]" <%= checked_state ? "checked" : "" %> class="person"
+                           data-person-name='<%= person_name %>'
+                           data-item-amount='<%= @event.base_price > 0 ? '%.2f' % @event.base_price : '0.00' %>'
+                           onchange="<%= link_to_toggle_person(f,registration,person_id,person_name)  %>"/>
+                    <span class="overlay"></span>
+                </span>
+        <h4><%= person_name %> (<%= person_id==current_user.user_id ? "You" : "" %> <%= @event.base_price > 0 ? '$%.2f' % @event.base_price : '$0.00' %>)</h4>
+      </label>
+
+  <% end %>
+
+</li>
+
+
+
+
+
+
+
+

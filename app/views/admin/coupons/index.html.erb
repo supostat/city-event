@@ -1,0 +1,66 @@
+<%= render 'admin/header' %>
+<%= link_to 'Back to events',admin_events_path,html_options = {:class => 'btn btn_go'}%>
+
+<h3>Generate Coupons</h3>
+
+<%= form_tag("/admin/coupons", method: "post") do %>
+    <fieldset>
+      <ul>
+        <li class="grid-12-12">
+          Select Discount Type : <%= select_tag(:discount_type, options_for_select([['Fixed', 'Fixed'], ['Percent', 'Percent']])) %>
+        </li>
+        <li class="grid-12-12">
+          Amount/Percent : <%= text_field_tag(:amount) %>
+        </li>
+        <li class="grid-6-12">
+          No of Coupons to generate : <%= text_field_tag(:no_of_coupons,'',html_options={:placeholder=>'Expiry date will be ignored, Will be used only once'}) %>
+        </li>
+        <li class="grid-6-12">
+          Custom Coupon Code : <%= text_field_tag(:coupon,'',html_options={:placeholder=>'No. of coupons will be ignored, You can create only 1 Coupon at a time'}) %>
+        </li>
+        <li class="grid-12-12">
+          Expiry Date : <%= date_field_tag(:expiry_date,Date.today+91.days) %> <em>default 90 days</em>
+        </li>
+        <li class="grid-12-12">
+          <%= submit_tag("Generate Coupon(s)",html_options={ class: 'btn btn_neutral'}) %>
+        </li>
+      </ul>
+    </fieldset>
+<% end %>
+
+<h3>Generated Coupons</h3>
+<table id="coupons" class="datatable with_stripes">
+  <thead>
+  <tr>
+    <td> Coupon Code
+    </td>
+    <td>Discount Type
+    </td>
+    <td> Amount/Percent
+    </td>
+    <td> Redeemed </td>
+    <td> Expires In </td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @coupons.each do |coupon| %>
+      <tr>
+        <th>
+          <%= coupon.coupon %>
+        </th>
+        <th>
+          <%= coupon.discount_type %>
+        </th>
+        <th>
+          <%= coupon.amount %>
+        </th>
+        <th>
+          <%= coupon.redeemed %>
+        </th>
+        <th>
+          <%= coupon.auto_expire==1? 'Auto' : coupon.daysOut>0 ? coupon.daysOut.to_s+' Day'+ (coupon.daysOut ==1 ? '' : 's') : 'Expired' %>
+        </th>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

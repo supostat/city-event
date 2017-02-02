@@ -1,0 +1,52 @@
+.idea
+.idea/
+.DS_Store
+tmp/*
+log/development.log
+tmp/pids/server.pid
+tmp/cache/*
+assets/stylesheets/.sass-cache/
+assets/stylesheets/*.css
+assets/city-appkit/stylesheets/.sass-cache/
+assets/city-appkit/stylesheets/.sass-cache/
+assets/city-appkit/stylesheets/*.css
+assets/city-appkit/stylesheets/*.css
+push-to-heroku-dev.sh
+/.project
+/push-dev-to-heroku-prod.sh
+
+public/design
+
+*.rbc
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3
+/db/city-texting-dev
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+
+
+## Environment normalisation:
+/.bundle
+/vendor/bundle
+
+# these should all be checked in to normalise the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv

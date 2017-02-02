@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+  <title>Event Registration</title>
+
+  <link href="//<%= request.host_with_port %>/css/styles.css" rel="stylesheet" type="text/css"/>
+
+  <%= javascript_include_tag "application", "jquery.validate", "jquery.maskedinput", "city-resizer", :cache => false %>
+  <script cache="false" src="//<%= request.host_with_port %>/js/custom.js?body=1"></script>
+  <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+
+<header class="main-header">
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <a class="logo" href="<%= root_path %>"><span>Two Rivers Church</span>Event Registration</a>
+    </div>
+
+    <div class="small-12 medium-6 columns">
+        <div class="userarea">Welcome, <%= current_city_user ? "#{current_city_user.first} #{current_city_user.last}" : 'Guest' %> </div>
+    </div>
+  </div>
+</header>
+
+
+<section id="content-area">
+  <div class="container">
+
+    <%= render "layouts/breadcrumb" %>
+
+    <div class="border">
+        <%= yield %>
+    </div>
+
+  </div>
+
+</section>
+<ul class="row debug">
+  <li class="small-12 columns"><%= debug(params) if Rails.env.development? %></li>
+</ul>
+</body>
+
+</html>

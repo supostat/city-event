@@ -1,0 +1,38 @@
+<%= render 'admin/header' %>
+
+<table id='admin_events' class='datatable with_stripes autosort'>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th data-autosort="true" data-sortdir="desc">Start Date</th>
+    <th>End Date</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @events.each do |event| %>
+      <tr id="<%= dom_id(event) %>">
+        <td><%= link_to event.title,admin_event_path(event.id) %></td>
+        <td><%= event.start_date.strftime("%m/%d/%Y") %></td>
+        <td><%= event.end_date.strftime("%m/%d/%Y") %></td>
+        <td><%= event.start_time.strftime("%I:%M%p") %></td>
+        <td><%= event.end_time.strftime("%I:%M%p") %></td>
+        <td> <%= link_to 'Delete',admin_event_path(event),
+                         data: { confirm: 'Are you sure?' },
+                         :method => :delete,
+                         :class => "btn btn_stop btn_mini" %> |
+          <%= link_to 'Report',admin_detail_path(event.id),:class => "btn btn_neutral btn_mini" %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="grid-12-12">
+   <%= link_to 'New Event',new_admin_event_path,html_options = {:class => 'btn btn_go'}%>
+   <%= link_to 'Generate Coupons',admin_coupons_path,html_options = {:class => 'btn btn_go'}%>
+
+</div>
+
+<%= render 'admin/footer' %>

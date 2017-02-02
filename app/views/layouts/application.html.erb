@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Registration</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+
+  <%= stylesheet_link_tag    "reports", media: "print"%>
+
+  <%= javascript_include_tag "application","jquery.validate","jquery.maskedinput","city-resizer", :cache => false %>
+  <script cache="false" src="//<%= request.host_with_port %>/js/orignal/custom.js?body=1"></script>
+
+  <%= csrf_meta_tags %>
+
+  <link rel="stylesheet" href="//<%= request.host_with_port %>/redactor/redactor.css" />
+  <script src="//<%= request.host_with_port %>/redactor/redactor.min.js"></script>
+
+</head>
+<body onload="load()">
+
+<%= yield %>
+
+<ul>
+  <li class="grid-12-12 noPrint"><%= debug(params) if Rails.env.development? %></li>
+</ul>
+
+<script>
+
+        function load()
+        {
+
+            TheCity.PluginHelper.resizeIFrame({
+                subdomain: '2rc',    //Change this to your City subdomain
+                useSSL: false,       //Whether or not your plugin uses SSL
+                extra: 0,           //Extra number of pixels to expand iFrame height to
+                //(newHeight= documentHeight + extra)
+                refresh: 0,        //How often to check for new documentHeight, 0 to disable,
+                forceResize: true  //By default the plugin doesn't resize if the height is within
+                //85px of the last time it was called. Set to true to override
+            });
+
+            autosort();
+        }
+
+</script>
+
+</body>
+</html>

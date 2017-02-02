@@ -1,0 +1,26 @@
+<header class="center_stage">
+    <h1><%= @registration.event.title %></h1>
+    <div class="context_bar"></div>
+</header>
+
+<div class="grid_5">
+    <fieldset style="background-image:none;">
+        <h3 class="rule">Who you have selected</h3>
+        <ul class="person-list extra-indent">
+            <% @registration.registration_guests.each do |member| %>
+            <li><%= member.first+' '+ member.last %>&nbsp;(<%= "$%.2f" % @registration.event.base_price  %>)</li>
+            <% end %>
+        </ul>
+        <h3 class="rule">What you have selected</h3>
+        <ul class="person-list">
+            <% @registration.summary.rows.each do |summary| %>
+            <li><%= summary[0]%>&nbsp;(<%= "$%.2f" % summary[1] %>)</li>
+            <% end %>
+        </ul>
+    </fieldset>
+    <h5>Grand Total: <span id="grand_total"><%= "$%.2f" % @registration.amount_payable  %></span></h5>
+</div>
+
+<p>
+  <%= link_to 'Back to events',events_path,html_options = {:class => 'btn btn_go'}%>
+</p>

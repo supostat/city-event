@@ -1,0 +1,13 @@
+<section id="user-lookup" class="row">
+      <h1 class="small-12 columns">Hello, who are you?</h1>
+      <%= simple_form_for @city_user, :url => upcoming_path, :method => :post do |f| %>
+            <%= f.text_field :city_user_id, :placeholder => "John Smith...",:class => 'typeahead home-autocomplete medium-12 large-8 large-push-2 columns', 'data-autocomplete-url' => autocomplete_for_city_user_full_name_city_users_path %>
+      <% end %>
+      <p class="small-12 columns">Start typing your name then select your identity from the dropdown</p>
+</section>
+
+<div class="row">
+  <div class="small-12 medium-6 columns">
+    Not a member? <a href="https://2rc.onthecity.org/kiosk/">Sign up here.</a>
+  </div>
+</div>
